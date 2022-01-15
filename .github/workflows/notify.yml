@@ -10,6 +10,7 @@ on:
       - opened
       - review_requested
       - edited
+      - ready_for_review
     branches: [ main ]
     
   push:
