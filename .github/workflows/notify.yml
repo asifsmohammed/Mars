@@ -39,7 +39,7 @@ jobs:
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }} |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
       - name: check for new PR revision
         if: ${{ github.event.action == 'synchronize' }}
@@ -47,7 +47,7 @@ jobs:
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }} | ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
       - name: check for merge
         if: github.event.pull_request.merged == true
@@ -55,4 +55,4 @@ jobs:
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: ' {"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: ' {"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |. ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
