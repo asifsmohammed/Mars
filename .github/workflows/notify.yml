@@ -9,6 +9,7 @@ on:
     types:
       - opened
       - review_requested
+      - edited
     branches: [ main ]
     
   push:
