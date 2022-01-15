@@ -38,7 +38,7 @@ jobs:
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: ' {"name":"${{ github.actor.name }}", "branch":"${{ github.base_ref }}", "message":"created a new PR", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "branch":"${{ github.base_ref }}", "message":"created a new PR", "pr":"${{ github.event.pull_request.html_url }}"}'
 
       
       - name: check for new PR revision
@@ -47,4 +47,4 @@ jobs:
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: ' {"name":"${{ github.actor.name }}", "branch":"${{ github.base_ref }}", "message":"created a new PR", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "branch":"${{ github.base_ref }}", "message":"created a new PR", "pr":"${{ github.event.pull_request.html_url }}"}'
