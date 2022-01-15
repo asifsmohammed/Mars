@@ -32,20 +32,20 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
         
-#       - name: check state
-#         if: ${{ github.event == 'pull_request' }}
-#         uses: fjogeleit/http-request-action@v1.8.1
-#         with:
-#           url: 'https://hooks.slack.com/workflows/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'
-#           method: 'POST'
-#           data: ' {"name":"${{ github.actor.name }}", "event":"${{ github.event }}", "branch":"${{ github.base_ref }}", "eventname":"${{ github.event_name }}", "pr":"${{ github.event.pull_request.html_url }}"}'
-  #         run: ${{ github.event }} = 'created a new pull_request'
-
-        
-      - name: HTTP Request Action
+      - name: check for new PR
+        if: ${{ github.event.action == 'opened' }}
         uses: fjogeleit/http-request-action@v1.8.1
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: ' {"name":"${{ github.actor.name }}", "event":"${{ github.event }}", "branch":"${{ github.base_ref }}", "eventname":"${{ github.event_name }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: ' {"name":"${{ github.actor.name }}", "branch":"${{ github.base_ref }}", "message":"created a new PR", "pr":"${{ github.event.pull_request.html_url }}"}'
+#           run: ${{ github.event }} = 'created a new pull_request'
 
+      
+      - name: check for new PR revision
+        if: ${{ github.event.action == 'synchronize' }}
+        uses: fjogeleit/http-request-action@v1.8.1
+        with:
+          url: 'https://hooks.slack.com/workflows/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'
+          method: 'POST'
+          data: ' {"name":"${{ github.actor.name }}", "branch":"${{ github.base_ref }}", "message":"created a new PR", "pr":"${{ github.event.pull_request.html_url }}"}'
