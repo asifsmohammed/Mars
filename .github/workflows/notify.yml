@@ -33,7 +33,6 @@ jobs:
         
 #       - name: check state
 #         if: ${{ github.event == 'pull_request' }}
-# #         - name: HTTP Request Action
 #         uses: fjogeleit/http-request-action@v1.8.1
 #         with:
 #           url: 'https://hooks.slack.com/workflows/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'
