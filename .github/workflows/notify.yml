@@ -34,8 +34,9 @@ jobs:
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: '{"id":"test"}'
+          data: '{"event":${{ github.event }}, name:"${{ github.actor }}"}'
 
+${{ github.actor }}
 
       # Runs a set of commands using the runners shell
 #       - name: Run a multi-line script
