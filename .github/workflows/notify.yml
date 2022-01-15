@@ -32,8 +32,9 @@ jobs:
       - name: HTTP Request Action
         uses: fjogeleit/http-request-action@v1.8.1
         with:
-          url: "curl -X POST -H "Content-Type: application/json" -d '{"id":"asif"} https://hooks.slack.com/workflows/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"
+          url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
+          data: '{"id":"test"}'
 
 
       # Runs a set of commands using the runners shell
