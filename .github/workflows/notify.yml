@@ -42,7 +42,7 @@ jobs:
 
       
       - name: check for new PR revision
-        if: ${{ github.event.action == 'synchronize' }}
+        if: ${{ github.event.action == 'ready_for_review' }}
         uses: fjogeleit/http-request-action@v1.8.1
         with:
           url: 'https://hooks.slack.com/workflows/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'
