@@ -31,11 +31,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Test
-        if: ${{ github.event_type == 'push' }}
+        if: ${{ github.event_type }} == 'push'
         env:
          SECRET_URL1: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-         echo "$SECRETURL1"
+         echo "$SECRET_URL1"
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL1"        
 
       - name: New PR
