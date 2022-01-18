@@ -21,7 +21,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build1:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment: notifications
@@ -31,10 +31,18 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Test
-        if: ${{ github.event.action == 'opened' }}
+        if: ${{ github.event_type == 'push' }}
         run: |
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
 
+  build2:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+#     environment: notifications
+    env:
+     SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+     
+    steps:
       - name: New PR
         if: ${{ github.event.action == 'opened' }}
 #         env:
@@ -43,6 +51,14 @@ jobs:
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
 
          
+  build3:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+#     environment: notifications
+    env:
+     SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    
+    steps:
       - name: New PR revision
 #         env:
 #          SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -50,6 +66,14 @@ jobs:
         run: |
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"
 
+  build4:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: notifications
+    env:
+     SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    
+    steps:
       - name: PR merge
 #         env:
 #          SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
