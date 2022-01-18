@@ -9,11 +9,11 @@ on:
     types:
       - opened
       - synchronize
-#       - closed
+      - closed
     branches: [ main ]
     
-  push:
-    branches: [ main ]
+#   push:
+#     branches: [ main ]
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,7 +31,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Test
-        if: ${{ github.event_type }} == 'push'
+        if: ${{ github.event_type  == 'push' }}
         env:
          SECRET_URL1: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
@@ -39,21 +39,21 @@ jobs:
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL1"        
 
       - name: New PR
-        if: ${{ github.event.action }} == 'opened'
+        if: ${{ github.event.action  == 'opened' }}
         env:
          SECRET_URL2: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL2"        
     
       - name: New PR revision
-        if: ${{ github.event.action }} == 'synchronize'
+        if: ${{ github.event.action == 'synchronize' }} 
         env:
          SECRET_URL3: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL3"
       
       - name: PR merge
-        if: ${{ github.event.pull_request.merged }} == true
+        if: github.event.pull_request.merged == true
         env:
          SECRET_URL4: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
