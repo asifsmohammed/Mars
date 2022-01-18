@@ -43,21 +43,21 @@ jobs:
         env:
          SECRET_URL2: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
+         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL2"        
     
       - name: New PR revision
         if: ${{ github.event.action }} == 'synchronize'
         env:
          SECRET_URL3: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"
+         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL3"
       
       - name: PR merge
         if: ${{ github.event.pull_request.merged }} == true
         env:
          SECRET_URL4: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
+         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL4"        
 
 #       - name: check for new PR
 #         if: ${{ github.event.action == 'opened' }}
