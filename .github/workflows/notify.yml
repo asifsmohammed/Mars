@@ -28,12 +28,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    
-      - name: secret 1
-        env: 
-         WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#         run: echo "$WEBHOOK_URL"
-        run: echo env.$WEBHOOK_URL
+      - shell: bash
+        env:
+         SUPER_SECRET: ${{ secrets.SuperSecret }}
+        run: |
+         echo "$SUPER_SECRET"
         
 
       # Runs a single command using the runners shell
