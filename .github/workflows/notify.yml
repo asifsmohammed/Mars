@@ -30,15 +30,14 @@ jobs:
     steps:
       - shell: bash
         env:
-         SUPER_SECRET: ${{ secrets.SuperSecret }}
+         SUPER_SECRET: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
          echo "$SUPER_SECRET"
         
 
       # Runs a single command using the runners shell
       - name: Check for new PR
-        if: ${{ github.event.action == 'opened' }}
-        
+#         if: ${{ github.event.action == 'opened' }}
         run: curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' $WEBHOOK_URL
         
 #       - name: check for new PR
