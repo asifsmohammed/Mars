@@ -33,7 +33,7 @@ jobs:
          SUPER_SECRET: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
          echo "$SUPER_SECRET"
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' $SUPER_SECRET
+         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SUPER_SECRET"
 
       # Runs a single command using the runners shell
       - name: Check for new PR
