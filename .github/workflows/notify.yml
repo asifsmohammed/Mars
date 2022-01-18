@@ -29,19 +29,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-#       - name: Test
-#         if: ${{ github.event_name == 'push' }}
-#         env:
-#          SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#         run: |
-#          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
+      - name: Test
+        if: ${{ github.event_name == 'push' }}
+        env:
+         SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
 
       - name: New PR
         if: ${{ github.event.action == 'opened' }}
         env:
          SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-         echo "$SECRET_URL"
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
 
          
