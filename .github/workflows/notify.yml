@@ -6,11 +6,15 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - closed
     branches: [ main ]
+    
   push:
     branches: [ main ]
   
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -26,12 +30,30 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo ${{ secrets.SLACK_WEBHOOK_URL }}
+#         run: curl -X POST -d 'name=${{ github.event.pull_request.user.login }}&message=created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}&pr"="${{ github.event.pull_request.html_url }}' ${{ secrets.SLACK_WEBHOOK_URL }}
         
-      - name: HTTP Request Action
+        
+#       - name: check for new PR
+#         if: ${{ github.event.action == 'opened' }}
+#         uses: fjogeleit/http-request-action@v1.8.1
+#         with:
+#           url: 'https://hooks.slack.com/workflows/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'
+#           method: 'POST'
+#           data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+
+      - name: check for new PR revision
+        if: ${{ github.event.action == 'synchronize' }}
         uses: fjogeleit/http-request-action@v1.8.1
         with:
           url: 'https://hooks.slack.com/workflows/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'
           method: 'POST'
-          data: ' {"name":"${{ github.actor }}", "event":"${{ github.event }}", "branch":"${{ github.base_ref }}", "eventname":"${{ github.event_name }}", "pr":"${{ github.event.pull_request }}"}'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
+      - name: check for merge
+        if: github.event.pull_request.merged == true
+        uses: fjogeleit/http-request-action@v1.8.1
+        with:
+          url: 'https://hooks.slack.com/workflows/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'
+          method: 'POST'
+          data: ' {"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
