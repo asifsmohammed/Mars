@@ -30,7 +30,8 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Check for new PR
-        run: curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' https://hooks.slack.com/workflows/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
+        if: ${{ github.event.action == 'opened' }}
+        run: curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' ${{ secrets.SLACK_WEBHOOK_URL }}
         
 #       - name: check for new PR
 #         if: ${{ github.event.action == 'opened' }}
