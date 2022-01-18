@@ -40,7 +40,7 @@ jobs:
 #           method: 'POST'
 #           data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
-      - name: check for new PR revision
+      - name: Check for new PR revision
         if: ${{ github.event.action == 'synchronize' }}
         uses: fjogeleit/http-request-action@v1.8.1
         with:
@@ -48,7 +48,7 @@ jobs:
           method: 'POST'
           data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
-      - name: check for merge
+      - name: Check for merge
         if: github.event.pull_request.merged == true
         uses: fjogeleit/http-request-action@v1.8.1
         with:
