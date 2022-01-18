@@ -59,6 +59,7 @@ jobs:
         run: |
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL4"        
 
+
 #       - name: check for new PR
 #         if: ${{ github.event.action == 'opened' }}
 #         uses: fjogeleit/http-request-action@v1.8.1
