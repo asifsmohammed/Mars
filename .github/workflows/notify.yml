@@ -30,7 +30,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: test
-        if: ${{ github.event == 'push' }}
+        if: ${{ github.event_name == 'push' }}
         env:
          SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
