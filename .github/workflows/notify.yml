@@ -30,8 +30,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-#         run: echo Hello, world!
-        run: curl POST -d 'name=${{ github.event.pull_request.user.login }}&message=created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}&pr"="${{ github.event.pull_request.html_url }}' ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: curl -X POST -d 'name=${{ github.event.pull_request.user.login }}&message=created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}&pr"="${{ github.event.pull_request.html_url }}' ${{ secrets.SLACK_WEBHOOK_URL }}
         
 #       - name: check for new PR
 #         if: ${{ github.event.action == 'opened' }}
