@@ -48,8 +48,7 @@ jobs:
 #          SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: ${{ github.event.action == 'synchronize' }}
         run: |
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
-
+         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"
 
       - name: PR merge
 #         env:
