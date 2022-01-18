@@ -24,17 +24,16 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    env: 
-     WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    environment: notifications
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
       - name: secret 1
-        run: echo ${{ secrets.SLACK_WEBHOOK_URL }}
+        env: 
+         WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: echo $WEBHOOK_URL
         
-      - name: secret 2
-        run: echo "$WEBHOOK_URL"
 
       # Runs a single command using the runners shell
       - name: Check for new PR
