@@ -34,6 +34,7 @@ jobs:
          SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: ${{ github.event.action == 'opened' }}
         run: |
+         echo "$SECRET_URL"
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
 
          
