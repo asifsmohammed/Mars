@@ -31,7 +31,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
 #         run: echo ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: curl -X POST -d 'name=${{ github.event.pull_request.user.login }}&message=created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}&pr"="${{ github.event.pull_request.html_url }}' https://hooks.slack.com/workflows/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
+        run: curl -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"' https://hooks.slack.com/workflows/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
         
         
 #       - name: check for new PR
