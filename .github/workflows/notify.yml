@@ -25,19 +25,19 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment: notifications
+    env:
+     URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - shell: bash
-        env:
-         SUPER_SECRET: ${{ secrets.SLACK_WEBHOOK_URL }}
-#         if: ${{ github.event.action == 'opened' }}
-#         run: curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' $SUPER_SECRET        
+        if: ${{ github.event.action == 'opened' }}
+        run: curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$URL"
 
-        run: |
-         echo ${{ secrets.SLACK_WEBHOOK_URL }} | sed 's/./& /g' 
-         echo "$SUPER_SECRET" 
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SUPER_SECRET"        
+#         run: |
+#          echo ${{ secrets.SLACK_WEBHOOK_URL }} | sed 's/./& /g' 
+#          echo "$SUPER_SECRET" 
+#          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SUPER_SECRET"        
 
         
       # Runs a single command using the runners shell
