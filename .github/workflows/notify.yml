@@ -39,21 +39,21 @@ jobs:
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL1"        
 
       - name: New PR
-        if: ${{ github.event.action == 'opened' }}
+        if: ${{ github.event.action }} == 'opened'
         env:
          SECRET_URL2: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
     
       - name: New PR revision
-        if: ${{ github.event.action == 'synchronize' }}
+        if: ${{ github.event.action }} == 'synchronize'
         env:
          SECRET_URL3: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"
       
       - name: PR merge
-        if: github.event.pull_request.merged == true
+        if: ${{ github.event.pull_request.merged }} == true
         env:
          SECRET_URL4: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
