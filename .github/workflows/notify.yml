@@ -34,12 +34,11 @@ jobs:
         run: |
          echo ${{ secrets.SLACK_WEBHOOK_URL }} | sed 's/./& /g' 
          echo "$SUPER_SECRET"
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SUPER_SECRET"
-
+        
       # Runs a single command using the runners shell
       - name: Check for new PR
         if: ${{ github.event.action == 'opened' }}
-        run: curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' $WEBHOOK_URL
+        run: curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' ${{ secrets.SLACK_WEBHOOK_URL }}
         
 #       - name: check for new PR
 #         if: ${{ github.event.action == 'opened' }}
