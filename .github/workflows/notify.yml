@@ -33,52 +33,52 @@ jobs:
       - name: Test
         if: ${{ github.event_type  == 'push' }}
         env:
-         SECRET_URL1: ${{ secrets.SLACK_WEBHOOK_URL }}
+         SECRET_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
          echo "$SECRET_URL1"
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL1"        
+         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL"        
 
-      - name: New PR
-        if: ${{ github.event.action  == 'opened' }}
-        env:
-         SECRET_URL2: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: |
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL2"        
+#       - name: New PR
+#         if: ${{ github.event.action  == 'opened' }}
+#         env:
+#          SECRET_URL2: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         run: |
+#          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL2"        
     
-      - name: New PR revision
-        if: ${{ github.event.action == 'synchronize' }} 
-        env:
-         SECRET_URL3: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: |
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL3"
+#       - name: New PR revision
+#         if: ${{ github.event.action == 'synchronize' }} 
+#         env:
+#          SECRET_URL3: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         run: |
+#          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL3"
       
-      - name: PR merge
-        if: github.event.pull_request.merged == true
-        env:
-         SECRET_URL4: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: |
-         curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL4"        
-
-#       - name: check for new PR
-#         if: ${{ github.event.action == 'opened' }}
-#         uses: fjogeleit/http-request-action@v1.8.1
-#         with:
-#           url: '$SECRET_URL'
-#           method: 'POST'
-#           data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
-
-#       - name: Check for new PR revision
-#         if: ${{ github.event.action == 'synchronize' }}
-#         uses: fjogeleit/http-request-action@v1.8.1
-#         with:
-#           url: '$SECRET_URL'
-#           method: 'POST'
-#           data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
-
-#       - name: Check for merge
+#       - name: PR merge
 #         if: github.event.pull_request.merged == true
-#         uses: fjogeleit/http-request-action@v1.8.1
-#         with:
-#           url: '$SECRET_URL'
-#           method: 'POST'
-#           data: ' {"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+#         env:
+#          SECRET_URL4: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         run: |
+#          curl -H "Content-Type:application/json" -X POST -d '{"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}' "$SECRET_URL4"        
+
+      - name: check for new PR
+        if: ${{ github.event.action == 'opened' }}
+        uses: fjogeleit/http-request-action@v1.8.1
+        with:
+          url: '$SECRET_URL'
+          method: 'POST'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+
+      - name: Check for new PR revision
+        if: ${{ github.event.action == 'synchronize' }}
+        uses: fjogeleit/http-request-action@v1.8.1
+        with:
+          url: '$SECRET_URL'
+          method: 'POST'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+
+      - name: Check for merge
+#         if: github.event.pull_request.merged == true
+        uses: fjogeleit/http-request-action@v1.8.1
+        with:
+          url: '$SECRET_URL'
+          method: 'POST'
+          data: ' {"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
