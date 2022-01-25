@@ -36,7 +36,7 @@ jobs:
         with:
           url: ${{ secrets.SLACK_WEBHOOK_URL }}
           method: 'POST'
-          data: ' {"name":"${{  }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
 #       - name: New PR
 #         if: ${{ github.event.action  == 'opened' }}
