@@ -38,7 +38,7 @@ jobs:
         with:
           url: ${{ secrets.SLACK_WEBHOOK_URL }}
           method: 'POST'
-          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
       - name: check for new PR
         if: ${{ github.event.action == 'opened' }}
@@ -46,7 +46,7 @@ jobs:
         with:
           url: ${{ secrets.SLACK_WEBHOOK_URL }}
           method: 'POST'
-          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: '{"name":"${{ github.event.pull_request.user.login }}", "message":"created a new PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
       - name: Check for new PR revision
         if: ${{ github.event.action == 'synchronize' }}
@@ -54,7 +54,7 @@ jobs:
         with:
           url: ${{ secrets.SLACK_WEBHOOK_URL }}
           method: 'POST'
-          data: ' {"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: '{"name":"${{ github.event.pull_request.user.login }}", "message":"pushed a new revision \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
       - name: Check for merge
         if: github.event.pull_request.merged == true
@@ -62,7 +62,7 @@ jobs:
         with:
           url: ${{ secrets.SLACK_WEBHOOK_URL }}
           method: 'POST'
-          data: ' {"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: '{"name":"${{ github.actor }}", "message":"merged a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
 
       - name: PR approved
         if: github.event.review.state == 'approved'
@@ -70,4 +70,4 @@ jobs:
         with:
           url: ${{ secrets.SLACK_WEBHOOK_URL }}
           method: 'POST'
-          data: ' {"name":"${{ github.actor }}", "message":"approved a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
+          data: '{"name":"${{ github.actor }}", "message":"approved a PR \n ${{ github.base_ref }}  |  ${{ github.event.pull_request.title }}", "pr":"${{ github.event.pull_request.html_url }}"}'
