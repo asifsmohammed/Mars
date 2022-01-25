@@ -10,7 +10,7 @@ on:
       - opened
       - synchronize
       - closed
-#    branches: [ main ]
+    branches: [ main ]
     
   push:
     branches: [ main ]
